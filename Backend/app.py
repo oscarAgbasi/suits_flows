@@ -21,7 +21,7 @@ ACCESS_TOKEN_EXPIRE_MINUTES = 30
 app = FastAPI()
 
 # dbconnection
-client = motor.motor_asyncio.AsyncIOMotorClient("mongodb://localhost:27017/")
+client = motor.motor_asyncio.AsyncIOMotorClient("mongodb+srv://admin:ozilISbetterthanpogba@cluster0.bxqh0.mongodb.net/mydatabase1?retryWrites=true&w=majority")
 db = client['mydatabase1']
 
 
