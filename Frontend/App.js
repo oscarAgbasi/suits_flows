@@ -10,7 +10,6 @@ import { BottomTabNavigation } from "./src/navigations/BottomTabNavigation";
 
 const Stack = createStackNavigator();
 function App() {
-  console.log("APP");
   const { state } = React.useContext(AuthContext);
   console.log(state);
 
@@ -38,6 +37,7 @@ function App() {
 export default () => {
   return (
     <>
+    <StatusBar style="dark" />
     <AuthProvider>
       <App />
     </AuthProvider>

@@ -1,17 +1,18 @@
 import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
+//import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import SigninScreen from '../screens/SigninScreen';
 import SignupScreen from '../screens/SignupScreen';
+import WelcomeScreen from '../screens/AuthScreens/WelcomeScreen';
 
 const Authstack = createStackNavigator();
 
 export const AuthStackNavigation = () => {
     return(
-        <Authstack.Navigator initialRouteName="Login">
+        <Authstack.Navigator initialRouteName="Welcome">
             <Authstack.Screen name="Login" component={SigninScreen} />
             <Authstack.Screen name="SignUp" component={SignupScreen} />
+            <Authstack.Screen name="Welcome" component={WelcomeScreen} options={{ headerShown: false }}/>
         </Authstack.Navigator>
-        //<SigninScreen/>
     )
 }
