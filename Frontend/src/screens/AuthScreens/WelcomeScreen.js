@@ -2,9 +2,10 @@ import React from 'react'
 import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native'
 import { Layout } from "../../components/Layout";
 import tw from 'tailwind-react-native-classnames';
+import { Button } from 'react-native-elements';
+
 
 export default function WelcomeScreen({navigation}) {
-    var yourPicture = require('../../../assets/house_rental.jpg');
     const navSignup = () => {
         console.log('Register clicked');
         navigation.navigate('SignUp')
@@ -15,42 +16,52 @@ export default function WelcomeScreen({navigation}) {
     }
     return (
         <Layout>
-            <View style={tw `w-full h-full justify-end`}>
-                <View style ={{backgroundColor: 'red',marginBottom: 90, height: 288}}>
-                    {/* <Image source={yourPicture} /> */}
+            <View style={styles.container}>
+                <Image style={styles.illustrations} source={require('../../../assets/house_rental.jpg')}/>
+                <View style={styles.intro}>
+                    <Text style={tw `text-xl text-center font-bold`}>
+                        Rental Property {"\n"}  management made easy
+                    </Text>
                 </View>
-                <View style={{paddingBottom: 100}}>
-                    <Text style={tw `text-center text-xl font-bold `}>Rental Property</Text>
-                    <Text style={tw `text-center text-xl font-bold `}>management made easy</Text>
+                <View style={styles.navBttn}>
+                    <Button 
+                        title="Register"
+                        color= '#2F80ED'
+                        buttonStyle= {{marginBottom: 10}}
+                        onPress={navSignup}
+                    />
+                    <Button 
+                        onPress={navLogin}
+                        title="Sign in"
+                        type='outline'
+                        color= '#2F80ED'
+                    />
                 </View>
-                <TouchableOpacity style= {styles.registerBtn} onPress={() => navSignup()}>
-                    <Text style={tw `text-center text-white text-lg font-bold`}>Register</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style= {styles.signBtn} onPress={() => navLogin()}>
-                    <Text style={tw `text-center text-blue-600 text-lg font-bold`}>Sign in</Text>
-                </TouchableOpacity>
             </View>
         </Layout>
     )
 }
 
 const styles = StyleSheet.create({
-    registerBtn: {
-        padding: 10,
-        backgroundColor: '#2F80ED',
-        height: 50,
-        fontWeight: 'bold',
-        borderRadius: 4
+    container: {
+        flex: 1, 
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        flexWrap:'nowrap',
     },
-    signBtn: {
-        padding: 10, 
-        marginTop: 10,
-        backgroundColor: '#FFFFFF',
-        height: 50,
-        borderWidth: 0.5,
-        borderStyle: 'solid',
-        borderColor: '#2F80ED',
-        fontWeight: 'bold',
-        borderRadius: 4
+    illustrations: {
+        width: 390.37,
+        height: 221.5
+    },
+    intro:{
+        width: 340,
+        height: 56,
+        marginTop:90,
+        
+    },
+    navBttn: {
+        marginTop: 110,
+        width: '100%',
+
     }
 })
