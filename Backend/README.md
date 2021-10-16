@@ -1,9 +1,14 @@
 # MongoDB with FastAPI
 
 
+<<<<<<< HEAD
 #SKIP To running Backend
  uvicorn app:app --reload 
 #
+=======
+# SKIP To running Backend
+uvicorn app:app --reload
+>>>>>>> 5ded5d127ac1cdac41bdff96c6b9603eb3915f7c
 This is a small sample project demonstrating how to build an API with [MongoDB](https://developer.mongodb.com/) and [FastAPI](https://fastapi.tiangolo.com/).
 It was written to accompany a [blog post](https://developer.mongodb.com/quickstart/python-quickstart-fastapi/) - you should go read it!
 
