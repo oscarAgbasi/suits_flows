@@ -9,10 +9,10 @@ const Authstack = createStackNavigator();
 
 export const AuthStackNavigation = () => {
     return(
-        <Authstack.Navigator initialRouteName="Welcome">
+        <Authstack.Navigator initialRouteName="Welcome" screenOptions={{ headerShown: false}}>
             <Authstack.Screen name="Login" component={SigninScreen} />
-            <Authstack.Screen name="SignUp" component={SignupScreen} />
-            <Authstack.Screen name="Welcome" component={WelcomeScreen} options={{ headerShown: false }}/>
+            <Authstack.Screen name="SignUp" component={SignupScreen}/>
+            <Authstack.Screen name="Welcome" component={WelcomeScreen}/>
         </Authstack.Navigator>
     )
 }
