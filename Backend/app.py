@@ -21,15 +21,14 @@ ACCESS_TOKEN_EXPIRE_MINUTES = 30
 app = FastAPI()
 
 # dbconnection
-client = motor.motor_asyncio.AsyncIOMotorClient("mongodb+srv://admin:ozilISbetterthanpogba@cluster0.bxqh0.mongodb.net/mydatabase1?retryWrites=true&w=majority")
+
+client = motor.motor_asyncio.AsyncIOMotorClient("mongodb+srv://admin:ozilISbetterthanpogba@cluster0.bxqh0.mongodb.net/mydatabase1?retryWrites=true&w=majority", tls=True, tlsAllowInvalidCertificates=True)
 db = client['mydatabase1']
 
 
 # authentication
 def fake_hash_password(password: str):
     return "fakehashed" + password
-
-
 
 
 class Token(BaseModel):
