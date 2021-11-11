@@ -6,7 +6,7 @@ from pydantic import BaseModel, Field, EmailStr
 from bson import ObjectId
 from datetime import datetime, timedelta
 from jose import JWTError, jwt
-
+import bcrypt
 from typing import Optional, List
 from passlib.context import CryptContext
 import motor.motor_asyncio
@@ -58,7 +58,26 @@ class LandlordModel(BaseModel):
     id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
     name: Optional[str] = Field(...)
     email: EmailStr = Field(...)
-    hashed_password: str
+    hashed_password: str = Field(...)
+    class Config:
+        allow_population_by_field_name = True
+        arbitrary_types_allowed = True
+        json_encoders = {ObjectId: str}
+        schema_extra = {
+            "example": {
+                "username": "example",
+                "name": "Jane Doe",
+                "email": "jdoe@example.com",
+                "hashed_password": 'hahsedpassword'
+            }
+        }
+
+class LandlordModelOut(BaseModel):
+    username: str
+    id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
+    name: Optional[str] = Field(...)
+    email: EmailStr = Field(...)
+
     class Config:
         allow_population_by_field_name = True
         arbitrary_types_allowed = True
@@ -99,17 +118,17 @@ def get_password_hash(password):
 
 async def get_landlord(db, username: str):
     myquery = {"name": username}
-    user_dict = await db["landlord"].find_one(myquery)
+    user_dict =await db["landlord"].find_one(myquery)
     return user_dict
     #return LandlordInDB(**user_dict)
 
 
-def authenticate_user(db, username: str, password: str):
-    user = get_landlord(db, username)
+async def authenticate_user(db, username: str, password: str):
+    user = await get_landlord(db, username)
     print(user)
     if not user:
         return False
-    if not verify_password(password, user.get('hashed_password')):
+    if not verify_password(password, await user.get('hashed_password')):
         return False
     return user
 
@@ -173,7 +192,7 @@ class UpdateLandlordModel(BaseModel):
 
 @app.post("/token", response_model=Token)
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
-    user = authenticate_user(db, form_data.username, form_data.password)
+    user = await authenticate_user(db, form_data.username, form_data.password)
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -182,21 +201,22 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
         )
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
-        data={"sub": user.username}, expires_delta=access_token_expires
+        data={"sub": user.get('username')}, expires_delta=access_token_expires
     )
     return {"access_token": access_token, "token_type": "bearer"}
 
 
-@app.post("/", response_description="Add new Landlord", response_model=LandlordModel)
+@app.post("/", response_description="Add new Landlord", response_model=LandlordModelOut)
 async def create_landlord(landlord: LandlordModel = Body(...)):
     landlord = jsonable_encoder(landlord)
+    landlord["hashed_password"] = get_password_hash(landlord["hashed_password"])
     new_landlord = await db["landlord"].insert_one(landlord)
     created_landlord = await db["landlord"].find_one({"_id": new_landlord.inserted_id})
     return JSONResponse(status_code=status.HTTP_201_CREATED, content=created_landlord)
 
 
 @app.get(
-    "/", response_description="List all landlords", response_model=List[LandlordModel]
+    "/", response_description="List all landlords", response_model=List[LandlordModelOut]
 )
 async def list_landlords():
     landlords = await db["landlord"].find().to_list(1000)
@@ -232,11 +252,11 @@ async def update_landlord(id: str, landlord: UpdateLandlordModel = Body(...)):
     raise HTTPException(status_code=404, detail=f"Landlord {id} not found")
 
 
-@app.delete("/{id}", response_description="Delete a Landlord")
-async def delete_Landlord(id: str):
-    delete_result = await db["landlord"].delete_one({"_id": id})
+@app.delete("/{username}", response_description="Delete a Landlord")
+async def delete_Landlord(username: str):
+    delete_result = await db["landlord"].delete_one({"username": username})
 
     if delete_result.deleted_count == 1:
         return JSONResponse(status_code=status.HTTP_204_NO_CONTENT)
 
-    raise HTTPException(status_code=404, detail=f"Landlords {id} not found")
+    raise HTTPException(status_code=404, detail=f"Landlords {username} not found")
