@@ -3,7 +3,8 @@ import {
     StyleSheet, 
     View,
     SafeAreaView,
-    Text
+    Text,
+    ScrollView
 } from 'react-native';
 import tw from 'tailwind-react-native-classnames';
 import { useWindowDimensions } from 'react-native';
