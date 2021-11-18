@@ -6,7 +6,8 @@ from pydantic import BaseModel, Field, EmailStr
 from bson import ObjectId
 from datetime import datetime, timedelta
 from jose import JWTError, jwt
-import bcrypt
+#from bcrypt import *
+from passlib.hash import bcrypt
 from typing import Optional, List
 from passlib.context import CryptContext
 import motor.motor_asyncio
@@ -128,7 +129,7 @@ async def authenticate_user(db, username: str, password: str):
     print(user)
     if not user:
         return False
-    if not verify_password(password, await user.get('hashed_password')):
+    if not verify_password(password, await user.get("hashed_password")):
         return False
     return user
 
@@ -209,7 +210,8 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
 @app.post("/", response_description="Add new Landlord", response_model=LandlordModelOut)
 async def create_landlord(landlord: LandlordModel = Body(...)):
     landlord = jsonable_encoder(landlord)
-    landlord["hashed_password"] = get_password_hash(landlord["hashed_password"])
+    #landlord["hashed_password"] = get_password_hash(landlord["hashed_password"])
+    landlord["hashed_password"] = bcrypt.hash(landlord["hashed_password"])
     new_landlord = await db["landlord"].insert_one(landlord)
     created_landlord = await db["landlord"].find_one({"_id": new_landlord.inserted_id})
     return JSONResponse(status_code=status.HTTP_201_CREATED, content=created_landlord)
