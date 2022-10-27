@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useContext, useState, useEffect } from "react";
 import {
   StyleSheet,
@@ -12,6 +13,7 @@ import tw from 'tailwind-react-native-classnames';
 import { Context as AuthContext } from "../context/AuthContext";
 import { Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {config} from '../util/config'
 
 
 const SigninScreen = ({ navigation }) => {
@@ -19,6 +21,40 @@ const SigninScreen = ({ navigation }) => {
   const [password, setPassword] = useState("");
   const { state, signin } = useContext(AuthContext);
   const [authState, setAuthState] = useState(null);
+  
+  const navSignup = () => {
+    console.log('Let go to backend');
+    let url = config.SERVER_URL + '/test';
+    console.log('url: ' + url);
+    // axios.get(config.SERVER_URL + '/test')
+    //   .then((response) => {
+    //     console.log('response');
+    //     console.dir(response)
+    //   }).catch(err => {console.log(err)})
+    axios({
+      method: 'get',
+      url: config.SERVER_URL + '/test',
+      headers: {
+        'Content-type': 'Application/json',
+        Accept: 'Application/json',
+        headers: {"Access-Control-Allow-Origin": "*"}
+        // Authorization: jwt,
+      },
+      data: {}
+    }).then(res => {
+      console.log(res);
+    }).catch (err => {
+      console.log('What happening? ' + err);
+    })
+    // fetch(config.SERVER_URL + '/test')
+    // .then(res => {
+    //   console.log('Request: ' + res);
+    // })
+    // .catch(err => {
+    //   console.log('What happening? ' + err);
+    // })
+    
+  }
 
   useEffect(() => {
     (async () => {
@@ -58,6 +94,7 @@ const SigninScreen = ({ navigation }) => {
             title="Sign in"
             color= '#2F80ED'
             buttonStyle= {{marginBottom: 10}}
+            onPress= {navSignup}
           />
           <Button
             title= "Sign up with Google"

@@ -1,0 +1,44 @@
+.form-inner {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group-clickable {
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-group-clickable-forgot {
+    color: blue;
+    cursor: pointer;
+}
+
+.form-group-clickable-forgot:hover {
+    color: rgb(26,31, 54);
+}
+
+.form-checkbox {
+    margin-top: 20px;
+    font-size: 14px;
+    color: rgb(65 , 69, 82);
+    fill: rgb(84 , 89, 105);
+    line-height: normal;
+    display: block;
+    cursor: pointer;
+}
+
+.redirect-group {
+    color: rgb(26,31, 54);
+    margin-left: 20px;
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.redirect-group span {
+    color: blue;
+    cursor: pointer;
+}
+
+.redirect-group span:hover {
+    color: rgb(26,31, 54);
+}
