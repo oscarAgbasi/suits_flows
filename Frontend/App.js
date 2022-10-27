@@ -11,7 +11,6 @@ import { BottomTabNavigation } from "./src/navigations/BottomTabNavigation";
 const Stack = createStackNavigator();
 function App() {
   const { state } = React.useContext(AuthContext);
-  console.log(state);
 
   return (
     <NavigationContainer>
