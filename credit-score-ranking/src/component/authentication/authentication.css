@@ -1,0 +1,86 @@
+/* .auth-container {
+    height: 100vh;
+    width: 100%;
+    font-weight: 400px;
+    margin-left: 172.5px;
+    margin-right: 172.5px;
+    padding-top: 56px;
+    line-height: normal;
+}
+
+.auth-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    flex-wrap: nowrap;
+}
+.auth-container-logo {
+    font-weight: bolder;
+    padding-bottom: 40px;
+}
+
+.auth-container-card-root {
+    display: block; 
+    padding-bottom: 56px;
+    padding-left: 48px;
+    padding-right: 48px;
+    padding-top: 56px;
+}
+
+form {
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+form div span {
+    color: rgb(26,31, 54);
+    display: inline;
+    font-size: 20px;
+    line-height: 28px;
+    white-space: normal;
+}
+
+.form-group {
+    margin-top: 20px;
+    font-size: 14px;
+    color: rgb(65 , 69, 82);
+    fill: rgb(84 , 89, 105);
+    outline-color: rgb(65 , 69, 82);
+    display: block;
+}
+
+.form-group label {
+    display: block;
+}
+
+.form-group input {
+    margin-top: 12px;
+    outline-color: rgb(65, 69, 82);
+    width: 404px;
+    max-width: 100%;
+    fill:  rgb(84, 69, 105);
+    min-height: 44px;
+    cursor: text;
+    display: inline-flex;
+    position: relative;
+    border: 1px solid rgb(65 , 69, 82);
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0);
+    padding-left: 16px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-right: 16px;
+}
+
+.form-inner-btn{
+    margin-top: 32px;
+    min-height: 44px;
+    color: white;
+    font-size: 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: blue;
+} */
